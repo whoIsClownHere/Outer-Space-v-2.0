@@ -10,6 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./fix.css">
+  <link rel="stylesheet" href="./planet.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.167.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.1/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
@@ -73,27 +82,23 @@
           </div>
         </div>
 
-        <div class="planet-stage reveal" aria-hidden="true">
-          <div class="planet-glow"></div>
-          <div class="planet-orbit orbit-1"></div>
-          <div class="planet-orbit orbit-2"></div>
-          <div class="planet-orbit orbit-3"></div>
+        <div class="planet-stage planet-stage-3d reveal">
+          <div id="planet-viewport" role="img" aria-label="Interactive green pixel planet. Drag to rotate and scroll to zoom."></div>
 
-          <div class="planet">
-            <div class="planet-shadow"></div>
-            <div class="planet-core"></div>
-            <div class="planet-band band-1"></div>
-            <div class="planet-band band-2"></div>
-            <div class="planet-band band-3"></div>
-            <div class="planet-crater crater-1"></div>
-            <div class="planet-crater crater-2"></div>
-            <div class="planet-crater crater-3"></div>
-            <div class="planet-ring"></div>
+          <div class="planet-hud" aria-hidden="true">
+            <span>OBJECT: PX-07</span>
+            <span>BIOME: TOXIC GREEN</span>
+            <span>STATUS: ONLINE</span>
+          </div>
+
+          <div class="planet-ui">
+            <button type="button" id="toggleSpin">AUTO SPIN: ON</button>
+            <button type="button" id="pulsePlanet">ENERGY PULSE</button>
           </div>
 
           <div class="planet-card terminal-panel">
-            <strong>GITHUB PAGE</strong>
-            <span>source code · screenshots · setup guide</span>
+            <strong>PLANET INTERFACE</strong>
+            <span>drag to rotate · scroll to zoom · click signal nodes</span>
           </div>
         </div>
       </div>
@@ -125,5 +130,6 @@ python3 main.py</code></pre>
   </footer>
 
   <script src="./script.js" defer></script>
+  <script type="module" src="./planet.js"></script>
 </body>
 </html>
