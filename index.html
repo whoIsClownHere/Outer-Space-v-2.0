@@ -1,189 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Outer Space — retro pixel-style Pygame arcade game." />
-  <title>Outer Space | Pixel Arcade</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Outer Space — a full-screen pixel-art boss fight built with Python and pygame.">
+  <title>Outer Space — PX-17 Combat Terminal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Pixelify+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-frame"></div>
-  <canvas id="stars"></canvas>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="screen-noise" aria-hidden="true"></div>
 
   <header class="topbar">
-    <div class="brand">
-      <div class="brand-icon">OS</div>
-      <div class="brand-text">
-        <span class="brand-title">OUTER SPACE</span>
-        <span class="brand-sub">PYGAME PIXEL ARCADE</span>
-      </div>
-    </div>
+    <a class="brand" href="#home">
+      <span class="brand-tag">#STEREDENN</span>
+      <strong>Outer space</strong>
+    </a>
+
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">MENU</button>
 
     <nav class="nav">
-      <a href="#about">ABOUT</a>
-      <a href="#features">FEATURES</a>
-      <a href="#controls">CONTROLS</a>
-      <a href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">GITHUB</a>
+      <a href="#mission">MISSION</a>
+      <a href="#modes">MODES</a>
+      <a href="#arsenal">ARSENAL</a>
+      <a href="#gallery">VISUAL LOG</a>
+      <a href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">SOURCE ↗</a>
     </nav>
   </header>
 
-  <main class="container">
-    <section class="hero panel">
-      <div class="hero-copy">
-        <p class="section-label">PRESS START</p>
-        <h1>OUTER<br>SPACE</h1>
-        <p class="hero-text">
-          A retro-inspired space arcade game built with Python and Pygame.
-          Dodge danger, survive longer, and chase your highest score.
-        </p>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-background" aria-hidden="true"></div>
 
-        <div class="hero-actions">
-          <a class="pixel-btn primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">
-            DOWNLOAD GAME
+      <div class="hero-console terminal-panel reveal">
+        <p class="panel-kicker">SECTOR GREEN / START TERMINAL</p>
+        <h1>COMMAND CONSOLE</h1>
+        <p class="status-line">pre-launch protocol active<span class="cursor">_</span></p>
+
+        <div class="command-list">
+          <a class="command active" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">
+            <span class="command-id">01</span>
+            <span><strong>START</strong><small>download and launch</small></span>
+            <b>▶</b>
           </a>
-          <a class="pixel-btn" href="#about">
-            LEARN MORE
+          <a class="command" href="#modes">
+            <span class="command-id">02</span>
+            <span><strong>MODES</strong><small>difficulty and route</small></span>
+            <b>▶</b>
+          </a>
+          <a class="command danger" href="#gallery">
+            <span class="command-id">03</span>
+            <span><strong>VISUAL LOG</strong><small>combat recordings</small></span>
+            <b>▶</b>
           </a>
         </div>
 
-        <div class="hero-tags">
-          <span>PYTHON</span>
-          <span>PYGAME</span>
-          <span>PIXEL STYLE</span>
+        <div class="record-row">
+          <span>MISSION RECORD</span>
+          <strong>100.67%</strong>
         </div>
       </div>
 
-      <div class="hero-art">
-        <div class="screen">
-          <div class="screen-header">
-            <span>SECTOR_07</span>
-            <span>READY</span>
-          </div>
+      <div class="hero-ship reveal">
+        <div class="target-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="docs/screenshots/01-main-menu.png" alt="Outer Space main menu showing the PX-17 ship">
+        <div class="ship-label terminal-panel">
+          <strong>PX-17 READY</strong>
+          <span>laser system charged</span>
+        </div>
+      </div>
 
-          <div class="game-preview">
-            <div class="planet planet-1"></div>
-            <div class="planet planet-2"></div>
+      <div class="telemetry terminal-panel reveal">
+        <strong>PX-17 TELEMETRY</strong>
+        <span><b>SPACE</b> LASER</span>
+        <span><b>Z</b> SPREAD</span>
+        <span><b>X</b> CHARGE</span>
+        <span><b>C</b> ROCKET</span>
+      </div>
 
-            <div class="ship">
-              <div class="ship-row r1"></div>
-              <div class="ship-row r2"></div>
-              <div class="ship-row r3"></div>
-              <div class="ship-row r4"></div>
-            </div>
+      <div class="abort-line">ABORT CHANNEL ARMED</div>
+    </section>
 
-            <div class="pixel-star s1"></div>
-            <div class="pixel-star s2"></div>
-            <div class="pixel-star s3"></div>
-            <div class="pixel-star s4"></div>
-            <div class="pixel-star s5"></div>
-            <div class="pixel-star s6"></div>
+    <section class="section mission" id="mission">
+      <div class="section-head reveal">
+        <p>MISSION ROUTER / ACTIVE SECTOR</p>
+        <h2>ONE SMALL SHIP.<br>ONE EVOLVING WAR MACHINE.</h2>
+      </div>
 
-            <div class="hud-box score-box">SCORE: 0128</div>
-            <div class="hud-box life-box">LIFE: 03</div>
-          </div>
+      <div class="mission-grid">
+        <div class="copy-block terminal-panel reveal">
+          <p class="panel-kicker">MISSION BRIEF</p>
+          <h3>READ THE SCREEN.<br>CHOOSE THE RIGHT WEAPON.</h3>
+          <p>Outer Space is a full-screen pixel-art boss fight built around quick reactions, dramatic phase changes, and attack patterns that stay readable under pressure.</p>
+          <p>You are not holding one fire button until the boss disappears. You are managing cooldowns, dodging hazards, using slow motion, and learning how the boss changes from phase to phase.</p>
+        </div>
 
-          <div class="screen-footer">
-            <span>MISSION: SURVIVE</span>
-          </div>
+        <div class="mission-image reveal">
+          <img src="docs/screenshots/03-boss-fight.png" alt="Gameplay screenshot of the PX-17 fighting the Original Boss">
+          <span class="image-caption">COMBAT FEED / ORIGINAL BOSS PHASE 3</span>
         </div>
       </div>
     </section>
 
-    <section id="about" class="panel info-block">
-      <p class="section-label">ABOUT THE GAME</p>
-      <h2>RETRO FEEL.<br>SPACE PRESSURE.</h2>
-      <p>
-        Outer Space is designed like a fast arcade challenge: simple to understand,
-        hard to master. You control a ship, stay alive, react quickly, and keep pushing
-        your score further every run.
-      </p>
-
-      <div class="stats">
-        <div class="stat-card">
-          <strong>100%</strong>
-          <span>PYTHON / PYGAME</span>
-        </div>
-        <div class="stat-card">
-          <strong>1</strong>
-          <span>GOAL: SURVIVE</span>
-        </div>
-        <div class="stat-card">
-          <strong>∞</strong>
-          <span>RETRY ENERGY</span>
-        </div>
+    <section class="section modes" id="modes">
+      <div class="section-head reveal">
+        <p>ROUTE CIRCUIT AWAITING COMMAND</p>
+        <h2>MODE SELECT</h2>
       </div>
-    </section>
 
-    <section id="features" class="panel">
-      <p class="section-label">FEATURES</p>
-      <h2>ARCADE CORE</h2>
-
-      <div class="feature-grid">
-        <article class="feature-card">
-          <span class="feature-num">01</span>
-          <h3>FAST RUNS</h3>
-          <p>Jump in quickly and start playing without a long setup.</p>
+      <div class="mode-grid">
+        <article class="mode-card reveal">
+          <span>CLASSIC FIGHT</span>
+          <h3>Story</h3>
+          <strong>5 hearts</strong>
+          <p>Defeat the boss through the complete finite route.</p>
+          <small>Best warm-up route.</small>
         </article>
-
-        <article class="feature-card">
-          <span class="feature-num">02</span>
-          <h3>HIGH SCORE LOOP</h3>
-          <p>Every attempt gives you one more reason to beat your previous record.</p>
+        <article class="mode-card reveal">
+          <span>SCORE RUN</span>
+          <h3>Infinity</h3>
+          <strong>Endless boss</strong>
+          <p>Push the score as high as possible while the pressure keeps rising.</p>
+          <small>Record is saved.</small>
         </article>
-
-        <article class="feature-card">
-          <span class="feature-num">03</span>
-          <h3>PIXEL ENERGY</h3>
-          <p>Retro mood, simple visuals, and a game-first presentation style.</p>
+        <article class="mode-card hard reveal">
+          <span>MORE PRESSURE</span>
+          <h3>Hard</h3>
+          <strong>3 hearts</strong>
+          <p>Faster attacks, more boss health, and denser combat.</p>
+          <small>For confident pilots.</small>
         </article>
       </div>
     </section>
 
-    <section id="controls" class="panel">
-      <p class="section-label">CONTROLS</p>
-      <h2>HOW TO PLAY</h2>
+    <section class="section arsenal" id="arsenal">
+      <div class="section-head reveal">
+        <p>PX-17 WEAPON SYSTEMS</p>
+        <h2>ARSENAL</h2>
+      </div>
 
-      <div class="controls-grid">
-        <div class="control-panel">
-          <div class="keys">
-            <div class="key-row"><span class="key">W</span></div>
-            <div class="key-row">
-              <span class="key">A</span>
-              <span class="key">S</span>
-              <span class="key">D</span>
-            </div>
-          </div>
-          <p>MOVE SHIP</p>
+      <div class="arsenal-grid">
+        <article class="weapon reveal"><kbd>SPACE</kbd><div><h3>Quick Laser</h3><p>Reliable baseline damage. Always available.</p></div></article>
+        <article class="weapon reveal"><kbd>Z</kbd><div><h3>Spread Shot</h3><p>Clears drones and dense projectile lanes.</p></div></article>
+        <article class="weapon reveal"><kbd>X</kbd><div><h3>Charged Plasma</h3><p>Heavy damage that rewards timing and space.</p></div></article>
+        <article class="weapon reveal"><kbd>C</kbd><div><h3>Rocket</h3><p>Splash damage for mines and clustered threats.</p></div></article>
+        <article class="weapon slow reveal"><kbd>SHIFT</kbd><div><h3>Slow Motion</h3><p>Reposition safely, but shooting is disabled while active.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <div class="section-head reveal">
+        <p>COMBAT ARCHIVE / VISUAL LOG</p>
+        <h2>FIELD RECORDINGS</h2>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="reveal"><img src="docs/screenshots/01-main-menu.png" alt="Main menu"><figcaption>01 / COMMAND CONSOLE</figcaption></figure>
+        <figure class="reveal"><img src="docs/screenshots/02-mode-select.png" alt="Mode selection"><figcaption>02 / MISSION ROUTER</figcaption></figure>
+        <figure class="reveal"><img src="docs/screenshots/03-boss-fight.png" alt="Boss fight"><figcaption>03 / PHASE 3 COMBAT</figcaption></figure>
+        <figure class="reveal"><img src="docs/screenshots/04-phase-laser.png" alt="Phase laser transition"><figcaption>04 / LASER TRANSITION</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section tech">
+      <div class="section-head reveal">
+        <p>DEVELOPER TERMINAL</p>
+        <h2>RUN LOCALLY</h2>
+      </div>
+
+      <div class="tech-grid">
+        <div class="code-panel terminal-panel reveal">
+          <div class="code-head"><span>BOOT_SEQUENCE.SH</span><button data-copy="python3 -m pip install pygame\ncd project\npython3 main.py">COPY</button></div>
+          <pre><code><span>$</span> python3 -m pip install pygame
+<span>$</span> cd project
+<span>$</span> python3 main.py</code></pre>
         </div>
 
-        <div class="control-panel">
-          <div class="keys">
-            <div class="key-row"><span class="key wide">SPACE</span></div>
-          </div>
-          <p>ACTION</p>
+        <div class="specs terminal-panel reveal">
+          <p><span>ENGINE</span><strong>pygame</strong></p>
+          <p><span>LANGUAGE</span><strong>Python 3</strong></p>
+          <p><span>LOGICAL RESOLUTION</span><strong>1400 × 700</strong></p>
+          <p><span>MODES</span><strong>Story / Infinity / Hard</strong></p>
+          <p><span>STATUS</span><strong class="online">PLAYABLE PROTOTYPE</strong></p>
         </div>
       </div>
     </section>
 
-    <section class="panel cta">
-      <p class="section-label">READY?</p>
-      <h2>PLAY THE MISSION</h2>
-      <p>Open the repository, run the game, and start your next run.</p>
-      <a class="pixel-btn primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">
-        OPEN REPOSITORY
-      </a>
+    <section class="launch terminal-panel reveal">
+      <p class="panel-kicker">FINAL LAUNCH AUTHORIZATION</p>
+      <h2>PX-17 IS READY.</h2>
+      <p>Enter the arena, learn the patterns, and survive the Original Boss.</p>
+      <a class="launch-button" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer"><span>01</span><strong>OPEN GITHUB</strong><b>▶</b></a>
     </section>
   </main>
 
-  <footer class="footer">
-    <span>OUTER SPACE</span>
-    <span>PIXEL PYGAME PROJECT</span>
+  <footer>
+    <span>#STEREDENN</span>
+    <span>OUTER SPACE / PYTHON + PYGAME</span>
+    <span id="year"></span>
   </footer>
 
   <script src="script.js"></script>
