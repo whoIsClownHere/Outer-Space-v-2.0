@@ -1,0 +1,164 @@
+/* Layout corrections loaded after style.css */
+
+.hero {
+  display: block;
+  min-height: 720px;
+  padding: 92px 48px 108px;
+}
+
+.hero-background {
+  background-position: center center;
+  background-size: cover;
+}
+
+.hero-console {
+  width: min(430px, 44%);
+  margin: 0;
+  position: relative;
+  z-index: 4;
+}
+
+/* The real game screenshot is already used as the hero background. */
+.hero-ship {
+  display: none;
+}
+
+.telemetry {
+  position: absolute;
+  right: 38px;
+  bottom: 28px;
+  z-index: 5;
+  max-width: 640px;
+}
+
+.abort-line {
+  left: 48px;
+  bottom: 34px;
+  z-index: 5;
+}
+
+/* Prevent the tablet navigation from activating on normal desktop windows. */
+@media (min-width: 761px) {
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .nav {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  .topbar {
+    gap: 20px;
+  }
+
+  .nav {
+    gap: 13px;
+  }
+
+  .nav a {
+    font-size: 10px;
+  }
+
+  .hero-console {
+    width: 470px;
+    max-width: 58%;
+  }
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    padding-top: 12px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: 64px;
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    background: rgba(3, 15, 13, .98);
+    border: 1px solid var(--line);
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  main {
+    padding-top: 68px;
+  }
+
+  .hero {
+    min-height: 760px;
+    padding: 58px 14px 170px;
+  }
+
+  .hero-background {
+    background-position: 61% center;
+  }
+
+  .hero-console {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    background: rgba(3, 17, 15, .92);
+  }
+
+  .telemetry {
+    left: 14px;
+    right: 14px;
+    bottom: 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .telemetry > strong {
+    grid-column: 1 / -1;
+  }
+
+  .abort-line {
+    display: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .hero {
+    min-height: 800px;
+    padding-inline: 0;
+  }
+
+  .hero-console {
+    padding: 20px 14px;
+  }
+
+  .hero-console h1 {
+    font-size: 25px;
+  }
+
+  .command strong {
+    font-size: 19px;
+  }
+
+  .command small {
+    font-size: 12px;
+  }
+
+  .record-row strong {
+    font-size: 20px;
+  }
+}
