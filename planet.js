@@ -1,184 +1,59 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-
 const host = document.getElementById("planet-viewport");
 
 if (host) {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 50);
-  camera.position.set(0, 0.2, 5.2);
-
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
-  renderer.setClearColor(0x000000, 0);
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-  renderer.domElement.tabIndex = 0;
-  host.appendChild(renderer.domElement);
-
-  const world = new THREE.Group();
-  world.rotation.z = -0.08;
-  scene.add(world);
-
-  scene.add(new THREE.HemisphereLight(0xcaffdf, 0x03120c, 1.6));
-
-  const key = new THREE.DirectionalLight(0xdffff0, 3.2);
-  key.position.set(-3, 3, 4);
-  scene.add(key);
-
-  const rim = new THREE.PointLight(0x35ff91, 18, 12, 2);
-  rim.position.set(3, 0, -2.5);
-  scene.add(rim);
-
-  const pulseLight = new THREE.PointLight(0xaaffcf, 0, 8, 2);
-  pulseLight.position.set(0, 0, 3);
-  scene.add(pulseLight);
-
-  function randomFactory(seed) {
-    let value = seed;
-    return () => {
-      value = (value * 1664525 + 1013904223) % 4294967296;
-      return value / 4294967296;
-    };
-  }
-
-  function makePlanetTexture() {
-    const random = randomFactory(27);
-    const size = 128;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext("2d");
-    const palette = ["#062d1d", "#08472a", "#0d6737", "#148448", "#22a85b", "#3bd476", "#71f39d"];
-
-    for (let y = 0; y < size; y += 2) {
-      for (let x = 0; x < size; x += 2) {
-        const a = x / size * Math.PI * 2;
-        const b = y / size * Math.PI;
-        const terrain = Math.sin(a * 2.2 + Math.sin(b * 3) * 2) * 0.42
-          + Math.sin(a * 5 - b * 4) * 0.24
-          + Math.cos(a * 9 + b * 2) * 0.13
-          + (random() - 0.5) * 0.35
-          + Math.sin(b) * 0.28;
-        const index = Math.max(0, Math.min(palette.length - 1, Math.floor((terrain + 0.8) * 3.2)));
-        ctx.fillStyle = palette[index];
-        ctx.fillRect(x, y, 2, 2);
-      }
-    }
-
-    ctx.globalAlpha = 0.28;
-    ctx.fillStyle = "#c7ffdb";
-    for (let i = 0; i < 70; i += 1) {
-      ctx.fillRect(Math.floor(random() * 64) * 2, Math.floor(random() * 64) * 2, 2 + Math.floor(random() * 8), 2);
-    }
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestFilter;
-    return texture;
-  }
-
-  const planetTexture = makePlanetTexture();
-  const planet = new THREE.Mesh(
-    new THREE.SphereGeometry(1.48, 56, 32),
-    new THREE.MeshStandardMaterial({
-      map: planetTexture,
-      roughness: 0.9,
-      metalness: 0.03,
-      emissive: 0x06351f,
-      emissiveIntensity: 0.35,
-      flatShading: true
-    })
-  );
-  world.add(planet);
-
-  const clouds = new THREE.Mesh(
-    new THREE.SphereGeometry(1.505, 48, 28),
-    new THREE.MeshBasicMaterial({
-      color: 0x90ffc0,
-      transparent: true,
-      opacity: 0.07,
-      wireframe: true,
-      depthWrite: false
-    })
-  );
-  world.add(clouds);
-
-  const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(1.61, 48, 28),
-    new THREE.MeshBasicMaterial({
-      color: 0x40ff98,
-      transparent: true,
-      opacity: 0.09,
-      side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  world.add(atmosphere);
-
-  const ring = new THREE.Mesh(
-    new THREE.RingGeometry(1.86, 2.2, 128),
-    new THREE.MeshBasicMaterial({
-      color: 0x6dffc0,
-      transparent: true,
-      opacity: 0.32,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    })
-  );
-  ring.rotation.set(1.17, -0.22, 0.06);
-  world.add(ring);
-
-  const moon = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.16, 1),
-    new THREE.MeshStandardMaterial({
-      color: 0x82ffb3,
-      emissive: 0x0a4a2c,
-      emissiveIntensity: 0.8,
-      roughness: 1,
-      flatShading: true
-    })
-  );
-  scene.add(moon);
-
-  const hotspots = [];
-  [
-    [0.68, 0.72, 1.18, "SOURCE NODE"],
-    [-0.94, 0.24, 1.02, "BOSS SIGNAL"],
-    [0.34, -0.98, 1.0, "LAUNCH POINT"]
-  ].forEach(([x, y, z, label], index) => {
-    const marker = new THREE.Group();
-    const core = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.055, 1),
-      new THREE.MeshBasicMaterial({ color: index === 1 ? 0xffe77d : 0xc8ffe0 })
-    );
-    const halo = new THREE.Mesh(
-      new THREE.RingGeometry(0.08, 0.12, 18),
-      new THREE.MeshBasicMaterial({
-        color: index === 1 ? 0xffe77d : 0x45f08d,
-        transparent: true,
-        opacity: 0.75,
-        side: THREE.DoubleSide,
-        depthWrite: false
-      })
-    );
-    marker.add(core, halo);
-    marker.position.set(x, y, z).normalize().multiplyScalar(1.54);
-    marker.userData.label = label;
-    marker.userData.halo = halo;
-    world.add(marker);
-    hotspots.push(marker);
-  });
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.tabIndex = 0;
+  canvas.setAttribute("aria-label", "Interactive green pixel planet");
+  host.appendChild(canvas);
 
   const signal = document.createElement("div");
   signal.className = "planet-signal";
   signal.textContent = "SIGNAL ACQUIRED";
   host.appendChild(signal);
+
+  const spinButton = document.getElementById("toggleSpin");
+  const pulseButton = document.getElementById("pulsePlanet");
+
+  let width = 1;
+  let height = 1;
+  let rotationX = -0.12;
+  let rotationY = 0.2;
+  let zoom = 1;
+  let autoSpin = true;
+  let dragging = false;
+  let previousPointer = null;
+  let pulseStart = -1;
   let signalTimer;
+
+  const palette = ["#05271a", "#073824", "#0a5030", "#0d6c3d", "#12884a", "#21aa5c", "#39d174", "#78f5a5"];
+  const terrain = [];
+  const markers = [
+    { lat: 0.42, lon: 0.55, label: "SOURCE NODE", color: "#c9ffe0" },
+    { lat: -0.12, lon: -1.15, label: "BOSS SIGNAL", color: "#ffe77d" },
+    { lat: -0.72, lon: 1.7, label: "LAUNCH POINT", color: "#9dffc5" }
+  ];
+
+  function seeded(seed) {
+    let value = seed >>> 0;
+    return () => {
+      value = (value * 1664525 + 1013904223) >>> 0;
+      return value / 4294967296;
+    };
+  }
+
+  const random = seeded(27);
+  for (let lat = -Math.PI / 2; lat <= Math.PI / 2; lat += 0.075) {
+    for (let lon = -Math.PI; lon < Math.PI; lon += 0.075) {
+      const noise =
+        Math.sin(lon * 2.5 + Math.sin(lat * 4) * 1.8) * 0.42 +
+        Math.sin(lon * 5.2 - lat * 3.3) * 0.22 +
+        Math.cos(lon * 8.4 + lat * 2.2) * 0.12 +
+        (random() - 0.5) * 0.32 +
+        Math.cos(lat) * 0.2;
+      terrain.push({ lat, lon, value: noise });
+    }
+  }
 
   function showSignal(text) {
     signal.textContent = text;
@@ -187,144 +62,245 @@ if (host) {
     signalTimer = setTimeout(() => signal.classList.remove("visible"), 1200);
   }
 
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enablePan = false;
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.055;
-  controls.rotateSpeed = 0.62;
-  controls.zoomSpeed = 0.7;
-  controls.minDistance = 3.5;
-  controls.maxDistance = 7;
-  controls.autoRotate = !matchMedia("(prefers-reduced-motion: reduce)").matches;
-  controls.autoRotateSpeed = 0.75;
-
-  const spinButton = document.getElementById("toggleSpin");
-  const pulseButton = document.getElementById("pulsePlanet");
-
   function updateSpinButton() {
     if (!spinButton) return;
-    spinButton.textContent = `AUTO SPIN: ${controls.autoRotate ? "ON" : "OFF"}`;
-    spinButton.classList.toggle("is-active", controls.autoRotate);
-    spinButton.setAttribute("aria-pressed", String(controls.autoRotate));
+    spinButton.textContent = `AUTO SPIN: ${autoSpin ? "ON" : "OFF"}`;
+    spinButton.classList.toggle("is-active", autoSpin);
+    spinButton.setAttribute("aria-pressed", String(autoSpin));
   }
 
-  updateSpinButton();
+  function rotatePoint(x, y, z) {
+    const cosY = Math.cos(rotationY);
+    const sinY = Math.sin(rotationY);
+    let rx = x * cosY - z * sinY;
+    let rz = x * sinY + z * cosY;
+
+    const cosX = Math.cos(rotationX);
+    const sinX = Math.sin(rotationX);
+    const ry = y * cosX - rz * sinX;
+    rz = y * sinX + rz * cosX;
+
+    return { x: rx, y: ry, z: rz };
+  }
+
+  function spherePoint(lat, lon) {
+    const cl = Math.cos(lat);
+    return rotatePoint(cl * Math.cos(lon), Math.sin(lat), cl * Math.sin(lon));
+  }
+
+  function resize() {
+    width = Math.max(host.clientWidth, 1);
+    height = Math.max(host.clientHeight, 1);
+    const scale = width < 500 ? 0.68 : 0.58;
+    canvas.width = Math.floor(width * scale);
+    canvas.height = Math.floor(height * scale);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.imageSmoothingEnabled = false;
+  }
+
+  function drawRing(cx, cy, radius, time, pulse) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.28 + Math.sin(time * 0.00015) * 0.03);
+    ctx.scale(1, 0.36);
+    ctx.strokeStyle = `rgba(109,255,192,${0.36 + pulse * 0.35})`;
+    ctx.lineWidth = Math.max(1, radius * 0.018);
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 1.42, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(78,220,152,0.18)";
+    ctx.lineWidth = Math.max(1, radius * 0.008);
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 1.58, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function draw(time) {
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    if (autoSpin && !dragging) rotationY += 0.0032;
+
+    let pulse = 0;
+    if (pulseStart >= 0) {
+      const age = (time - pulseStart) / 1000;
+      if (age < 1.2) pulse = Math.sin(age / 1.2 * Math.PI);
+      else pulseStart = -1;
+    }
+
+    const cx = w * 0.52;
+    const cy = h * 0.49;
+    const radius = Math.min(w, h) * 0.255 * zoom * (1 + pulse * 0.05);
+
+    const glow = ctx.createRadialGradient(cx, cy, radius * 0.55, cx, cy, radius * 1.65);
+    glow.addColorStop(0, `rgba(69,240,141,${0.12 + pulse * 0.12})`);
+    glow.addColorStop(0.5, `rgba(31,170,96,${0.08 + pulse * 0.08})`);
+    glow.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius * 1.7, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawRing(cx, cy, radius, time, pulse);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.clip();
+
+    const base = ctx.createRadialGradient(cx - radius * 0.38, cy - radius * 0.42, radius * 0.08, cx, cy, radius * 1.05);
+    base.addColorStop(0, "#8cffb8");
+    base.addColorStop(0.28, "#2ac66b");
+    base.addColorStop(0.66, "#0b6c3c");
+    base.addColorStop(1, "#031c13");
+    ctx.fillStyle = base;
+    ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+
+    const pixel = Math.max(2, Math.round(radius * 0.024));
+    terrain
+      .map((cell) => ({ ...cell, point: spherePoint(cell.lat, cell.lon) }))
+      .filter((cell) => cell.point.z > 0)
+      .sort((a, b) => a.point.z - b.point.z)
+      .forEach((cell) => {
+        const light = Math.max(0, cell.point.x * -0.48 + cell.point.y * 0.42 + cell.point.z * 0.65);
+        let index = Math.floor((cell.value + 0.8) * 3.1 + light * 1.6);
+        index = Math.max(0, Math.min(palette.length - 1, index));
+        ctx.globalAlpha = 0.38 + cell.point.z * 0.62;
+        ctx.fillStyle = palette[index];
+        ctx.fillRect(
+          Math.round((cx + cell.point.x * radius) / pixel) * pixel,
+          Math.round((cy - cell.point.y * radius) / pixel) * pixel,
+          pixel + 1,
+          pixel + 1
+        );
+      });
+
+    ctx.globalAlpha = 1;
+    const shade = ctx.createRadialGradient(cx + radius * 0.58, cy + radius * 0.15, radius * 0.1, cx + radius * 0.38, cy, radius * 1.15);
+    shade.addColorStop(0, "rgba(0,0,0,0.58)");
+    shade.addColorStop(0.65, "rgba(0,0,0,0.08)");
+    shade.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = shade;
+    ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+    ctx.restore();
+
+    ctx.strokeStyle = `rgba(104,255,179,${0.62 + pulse * 0.28})`;
+    ctx.lineWidth = Math.max(2, radius * 0.025);
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius + 1, 0, Math.PI * 2);
+    ctx.stroke();
+
+    markers.forEach((marker, index) => {
+      const point = spherePoint(marker.lat, marker.lon);
+      marker.screen = null;
+      if (point.z <= 0) return;
+      const x = cx + point.x * radius;
+      const y = cy - point.y * radius;
+      const markerRadius = Math.max(4, radius * 0.035) * (1 + Math.sin(time * 0.004 + index) * 0.16);
+      marker.screen = { x, y, r: markerRadius * 2 };
+      ctx.strokeStyle = marker.color;
+      ctx.fillStyle = marker.color;
+      ctx.globalAlpha = 0.88;
+      ctx.lineWidth = Math.max(1, radius * 0.008);
+      ctx.beginPath();
+      ctx.arc(x, y, markerRadius * 1.9, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillRect(x - markerRadius * 0.35, y - markerRadius * 0.35, markerRadius * 0.7, markerRadius * 0.7);
+      ctx.globalAlpha = 1;
+    });
+
+    const moonAngle = time * 0.00045;
+    const moonX = cx + Math.cos(moonAngle) * radius * 1.72;
+    const moonY = cy + Math.sin(moonAngle * 1.35) * radius * 0.32;
+    const moonRadius = Math.max(5, radius * 0.095);
+    ctx.fillStyle = "#78ef9e";
+    ctx.strokeStyle = "rgba(188,255,214,0.85)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    requestAnimationFrame(draw);
+  }
+
+  function pointerPosition(event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+      x: (event.clientX - rect.left) * scaleX,
+      y: (event.clientY - rect.top) * scaleY
+    };
+  }
+
+  canvas.addEventListener("pointerdown", (event) => {
+    dragging = true;
+    previousPointer = { x: event.clientX, y: event.clientY };
+    canvas.setPointerCapture(event.pointerId);
+  });
+
+  canvas.addEventListener("pointermove", (event) => {
+    if (dragging && previousPointer) {
+      rotationY += (event.clientX - previousPointer.x) * 0.009;
+      rotationX += (event.clientY - previousPointer.y) * 0.006;
+      rotationX = Math.max(-1.1, Math.min(1.1, rotationX));
+      previousPointer = { x: event.clientX, y: event.clientY };
+      return;
+    }
+
+    const point = pointerPosition(event);
+    const hovering = markers.some((marker) => marker.screen && Math.hypot(point.x - marker.screen.x, point.y - marker.screen.y) < marker.screen.r);
+    canvas.style.cursor = hovering ? "pointer" : "grab";
+  });
+
+  canvas.addEventListener("pointerup", (event) => {
+    const point = pointerPosition(event);
+    const hit = markers.find((marker) => marker.screen && Math.hypot(point.x - marker.screen.x, point.y - marker.screen.y) < marker.screen.r);
+    dragging = false;
+    previousPointer = null;
+    canvas.releasePointerCapture(event.pointerId);
+    if (hit) showSignal(hit.label);
+  });
+
+  canvas.addEventListener("pointercancel", () => {
+    dragging = false;
+    previousPointer = null;
+  });
+
+  canvas.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    zoom *= event.deltaY > 0 ? 0.92 : 1.08;
+    zoom = Math.max(0.74, Math.min(1.34, zoom));
+  }, { passive: false });
+
+  canvas.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") rotationY -= 0.12;
+    if (event.key === "ArrowRight") rotationY += 0.12;
+    if (event.key === "ArrowUp") rotationX -= 0.1;
+    if (event.key === "ArrowDown") rotationX += 0.1;
+    if (event.key === " " || event.key === "Enter") {
+      event.preventDefault();
+      autoSpin = !autoSpin;
+      updateSpinButton();
+    }
+  });
+
   spinButton?.addEventListener("click", () => {
-    controls.autoRotate = !controls.autoRotate;
+    autoSpin = !autoSpin;
     updateSpinButton();
   });
 
-  let pulseStart = -1;
   pulseButton?.addEventListener("click", () => {
     pulseStart = performance.now();
     showSignal("ENERGY PULSE SENT");
   });
 
-  const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2();
-  let down = null;
-
-  function setPointer(event) {
-    const rect = renderer.domElement.getBoundingClientRect();
-    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-  }
-
-  renderer.domElement.addEventListener("pointerdown", (event) => {
-    down = [event.clientX, event.clientY];
-  });
-
-  renderer.domElement.addEventListener("pointermove", (event) => {
-    setPointer(event);
-    raycaster.setFromCamera(pointer, camera);
-    renderer.domElement.style.cursor = raycaster.intersectObjects(hotspots, true).length ? "pointer" : "grab";
-  });
-
-  renderer.domElement.addEventListener("pointerup", (event) => {
-    if (!down) return;
-    const distance = Math.hypot(event.clientX - down[0], event.clientY - down[1]);
-    down = null;
-    if (distance > 7) return;
-    setPointer(event);
-    raycaster.setFromCamera(pointer, camera);
-    const hit = raycaster.intersectObjects(hotspots, true)[0];
-    if (!hit) return;
-    const marker = hit.object.parent;
-    marker.userData.clickedAt = performance.now();
-    showSignal(marker.userData.label);
-  });
-
-  renderer.domElement.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      controls.autoRotate = !controls.autoRotate;
-      updateSpinButton();
-    }
-  });
-
-  function resize() {
-    const width = Math.max(host.clientWidth, 1);
-    const height = Math.max(host.clientHeight, 1);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    const scale = width < 500 ? 0.72 : 0.62;
-    renderer.setSize(Math.floor(width * scale), Math.floor(height * scale), false);
-    renderer.domElement.style.width = `${width}px`;
-    renderer.domElement.style.height = `${height}px`;
-  }
-
   new ResizeObserver(resize).observe(host);
   resize();
-
-  let previous = performance.now();
-
-  function animate(time) {
-    const delta = Math.min((time - previous) / 1000, 0.05);
-    previous = time;
-    const elapsed = time / 1000;
-
-    planet.rotation.y += delta * 0.025;
-    clouds.rotation.y += delta * 0.05;
-    ring.rotation.z += delta * 0.015;
-
-    moon.position.set(
-      Math.cos(elapsed * 0.55) * 2.55,
-      Math.sin(elapsed * 0.72) * 0.38,
-      Math.sin(elapsed * 0.55) * 1.45
-    );
-    moon.rotation.x += delta * 0.4;
-    moon.rotation.y += delta * 0.55;
-
-    hotspots.forEach((marker, index) => {
-      marker.lookAt(camera.position);
-      marker.userData.halo.rotation.z -= delta * (0.8 + index * 0.12);
-      const pulse = 1 + Math.sin(elapsed * 3.2 + index) * 0.12;
-      const age = time - (marker.userData.clickedAt || -10000);
-      const click = age < 550 ? Math.sin(age / 550 * Math.PI) * 0.7 : 0;
-      marker.scale.setScalar(pulse + click);
-    });
-
-    if (pulseStart >= 0) {
-      const age = (time - pulseStart) / 1000;
-      if (age < 1.2) {
-        const wave = Math.sin(age / 1.2 * Math.PI);
-        world.scale.setScalar(1 + wave * 0.065);
-        atmosphere.material.opacity = 0.09 + wave * 0.22;
-        pulseLight.intensity = wave * 45;
-        ring.material.opacity = 0.32 + wave * 0.32;
-      } else {
-        pulseStart = -1;
-        world.scale.setScalar(1);
-        atmosphere.material.opacity = 0.09;
-        pulseLight.intensity = 0;
-        ring.material.opacity = 0.32;
-      }
-    }
-
-    controls.update();
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-
-  requestAnimationFrame(animate);
+  updateSpinButton();
+  requestAnimationFrame(draw);
 }
