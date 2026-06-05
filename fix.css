@@ -1,43 +1,284 @@
-/* Layout corrections loaded after style.css */
+/* Hero redesign: no screenshot, green planet, stronger GitHub focus */
 
 .hero {
-  display: block;
-  min-height: 720px;
-  padding: 92px 48px 108px;
+  position: relative;
+  min-height: 860px;
+  padding: 110px 48px 120px;
+  overflow: hidden;
 }
 
 .hero-background {
-  background-position: center center;
-  background-size: cover;
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(circle at 72% 38%, rgba(39, 255, 148, 0.10), transparent 17%),
+    radial-gradient(circle at 66% 54%, rgba(17, 204, 127, 0.14), transparent 23%),
+    radial-gradient(circle at 18% 76%, rgba(0, 171, 102, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(1, 8, 8, 0.88), rgba(1, 8, 8, 0.66));
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 70% 48%, rgba(56, 255, 157, 0.06), transparent 24%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.16));
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(380px, 480px) 1fr;
+  gap: 40px;
+  align-items: center;
+  min-height: 600px;
 }
 
 .hero-console {
-  width: min(430px, 44%);
-  margin: 0;
+  padding: 30px 24px;
   position: relative;
   z-index: 4;
 }
 
-/* The real game screenshot is already used as the hero background. */
-.hero-ship {
-  display: none;
+.hero-console h1 {
+  font-size: clamp(34px, 4.5vw, 58px);
+  margin-bottom: 10px;
+}
+
+.hero-description {
+  margin: 0 0 20px;
+  color: #b9dddd;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: grid;
+  gap: 12px;
+  margin: 26px 0 18px;
+}
+
+.hero-cta {
+  display: grid;
+  grid-template-columns: 36px 1fr 20px;
+  align-items: center;
+  gap: 14px;
+  min-height: 66px;
+  padding: 12px 14px;
+  color: var(--text);
+  border-top: 1px solid rgba(95, 227, 232, 0.75);
+  border-bottom: 1px solid rgba(95, 227, 232, 0.35);
+  background: rgba(4, 22, 19, 0.72);
+  clip-path: polygon(0 0, 94% 0, 100% 50%, 94% 100%, 0 100%, 4% 50%);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.hero-cta:hover {
+  transform: translateX(4px);
+  border-top-color: var(--yellow);
+  border-bottom-color: var(--yellow);
+}
+
+.hero-cta span {
+  color: var(--cyan2);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hero-cta strong {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.hero-cta b {
+  color: var(--yellow);
+}
+
+.hero-cta-primary {
+  background: linear-gradient(90deg, rgba(255, 231, 125, 0.18), rgba(255, 231, 125, 0.04));
+  border-top-color: var(--yellow);
+  border-bottom-color: rgba(255, 231, 125, 0.55);
+}
+
+.hero-cta-primary strong {
+  color: var(--yellow);
+}
+
+.planet-stage {
+  position: relative;
+  min-height: 620px;
+  display: grid;
+  place-items: center;
+}
+
+.planet-glow {
+  position: absolute;
+  width: 540px;
+  height: 540px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(61, 255, 160, 0.22) 0%, rgba(61, 255, 160, 0.10) 26%, rgba(61, 255, 160, 0.04) 44%, transparent 70%);
+  filter: blur(20px);
+}
+
+.planet {
+  position: relative;
+  width: clamp(280px, 34vw, 430px);
+  height: clamp(280px, 34vw, 430px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #9dffca 0%, #4ce890 24%, #1fa963 46%, #0d5f3d 70%, #06281d 100%);
+  box-shadow:
+    0 0 30px rgba(72, 255, 160, 0.20),
+    0 0 120px rgba(72, 255, 160, 0.12),
+    inset -40px -40px 80px rgba(0, 0, 0, 0.30),
+    inset 24px 24px 50px rgba(255, 255, 255, 0.08);
+}
+
+.planet-core {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 36% 36%, rgba(195, 255, 220, 0.38), transparent 28%),
+    radial-gradient(circle at 68% 64%, rgba(5, 96, 55, 0.34), transparent 30%);
+  mix-blend-mode: screen;
+}
+
+.planet-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 78% 52%, rgba(0, 0, 0, 0.44), transparent 48%),
+    radial-gradient(circle at 75% 55%, rgba(0, 0, 0, 0.22), transparent 60%);
+}
+
+.planet-band {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 16%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(183, 255, 215, 0.06), rgba(42, 220, 118, 0.30), rgba(183, 255, 215, 0.05));
+  filter: blur(1px);
+  transform: rotate(-16deg);
+}
+
+.band-1 { top: 22%; }
+.band-2 { top: 44%; left: 6%; right: 8%; }
+.band-3 { top: 65%; left: 18%; right: 14%; }
+
+.planet-crater {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(4, 69, 42, 0.28);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.20);
+}
+
+.crater-1 { width: 58px; height: 34px; top: 30%; left: 18%; transform: rotate(-18deg); }
+.crater-2 { width: 76px; height: 40px; top: 58%; left: 54%; transform: rotate(12deg); }
+.crater-3 { width: 44px; height: 24px; top: 68%; left: 24%; transform: rotate(-9deg); }
+
+.planet-ring {
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  top: 46%;
+  height: 16%;
+  border-radius: 50%;
+  border: 2px solid rgba(133, 255, 214, 0.58);
+  transform: rotate(-18deg);
+  box-shadow: 0 0 20px rgba(95, 227, 232, 0.12);
+}
+
+.planet-orbit {
+  position: absolute;
+  border: 1px solid rgba(95, 227, 232, 0.18);
+  border-radius: 50%;
+}
+
+.orbit-1 {
+  width: 470px;
+  height: 470px;
+}
+
+.orbit-2 {
+  width: 560px;
+  height: 560px;
+}
+
+.orbit-3 {
+  width: 660px;
+  height: 420px;
+  transform: rotate(-18deg);
+}
+
+.planet-card {
+  position: absolute;
+  right: 6%;
+  bottom: 9%;
+  width: 290px;
+  padding: 16px 18px;
+  z-index: 3;
+}
+
+.planet-card strong {
+  display: block;
+  color: var(--yellow);
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.planet-card span {
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .telemetry {
   position: absolute;
-  right: 38px;
+  right: 34px;
   bottom: 28px;
-  z-index: 5;
-  max-width: 640px;
+  z-index: 4;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  padding: 14px 20px;
+  max-width: 720px;
+}
+
+.telemetry > strong {
+  color: var(--yellow);
+  font-size: 22px;
+}
+
+.telemetry span {
+  font-size: 13px;
+}
+
+.telemetry b {
+  display: block;
+  color: var(--cyan2);
+  font-size: 11px;
+  margin-bottom: 2px;
 }
 
 .abort-line {
+  position: absolute;
   left: 48px;
-  bottom: 34px;
-  z-index: 5;
+  bottom: 36px;
+  z-index: 4;
 }
 
-/* Prevent the tablet navigation from activating on normal desktop windows. */
+.hero-ship {
+  display: none !important;
+}
+
+/* desktop nav stays desktop */
 @media (min-width: 761px) {
   .menu-toggle {
     display: none !important;
@@ -53,22 +294,24 @@
   }
 }
 
-@media (max-width: 1100px) and (min-width: 761px) {
-  .topbar {
-    gap: 20px;
+@media (max-width: 1100px) {
+  .hero {
+    padding-inline: 28px;
   }
 
-  .nav {
-    gap: 13px;
+  .hero-grid {
+    grid-template-columns: minmax(340px, 440px) 1fr;
+    gap: 24px;
   }
 
-  .nav a {
-    font-size: 10px;
+  .planet-card {
+    right: 2%;
+    width: 250px;
   }
 
-  .hero-console {
-    width: 470px;
-    max-width: 58%;
+  .telemetry {
+    gap: 14px;
+    max-width: 620px;
   }
 }
 
@@ -90,7 +333,7 @@
     flex-direction: column;
     gap: 18px;
     padding: 20px;
-    background: rgba(3, 15, 13, .98);
+    background: rgba(3, 15, 13, 0.98);
     border: 1px solid var(--line);
   }
 
@@ -103,28 +346,50 @@
   }
 
   .hero {
-    min-height: 760px;
-    padding: 58px 14px 170px;
+    min-height: auto;
+    padding: 56px 14px 180px;
   }
 
-  .hero-background {
-    background-position: 61% center;
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
   }
 
   .hero-console {
+    max-width: 460px;
     width: 100%;
-    max-width: 430px;
     margin: 0 auto;
-    background: rgba(3, 17, 15, .92);
+  }
+
+  .planet-stage {
+    min-height: 390px;
+  }
+
+  .planet {
+    width: min(72vw, 320px);
+    height: min(72vw, 320px);
+  }
+
+  .orbit-1 { width: 340px; height: 340px; }
+  .orbit-2 { width: 410px; height: 410px; }
+  .orbit-3 { width: 470px; height: 300px; }
+
+  .planet-card {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: min(100%, 320px);
+    margin-top: 10px;
   }
 
   .telemetry {
     left: 14px;
     right: 14px;
-    bottom: 22px;
+    bottom: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px 14px;
+    max-width: none;
   }
 
   .telemetry > strong {
@@ -137,28 +402,37 @@
 }
 
 @media (max-width: 460px) {
-  .hero {
-    min-height: 800px;
-    padding-inline: 0;
-  }
-
   .hero-console {
     padding: 20px 14px;
   }
 
   .hero-console h1 {
-    font-size: 25px;
+    font-size: 28px;
   }
 
-  .command strong {
+  .hero-description {
+    font-size: 15px;
+  }
+
+  .hero-cta {
+    grid-template-columns: 28px 1fr 16px;
+    gap: 10px;
+    min-height: 58px;
+  }
+
+  .hero-cta strong {
     font-size: 19px;
   }
 
-  .command small {
-    font-size: 12px;
+  .telemetry {
+    grid-template-columns: 1fr;
   }
 
-  .record-row strong {
+  .planet-stage {
+    min-height: 320px;
+  }
+
+  .planet-card strong {
     font-size: 20px;
   }
 }
