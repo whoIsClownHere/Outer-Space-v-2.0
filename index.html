@@ -1,77 +1,129 @@
-<section class="hero hero-clean" id="home">
-  <div class="hero-background" aria-hidden="true"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Outer Space — a full-screen pixel-art boss fight built with Python and pygame.">
+  <title>Outer Space — Pixel Boss Fight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./fix.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="screen-noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
 
-  <div class="hero-grid">
-    <div class="hero-console terminal-panel reveal">
-      <p class="panel-kicker">SECTOR GREEN / START TERMINAL</p>
-      <h1>COMMAND CONSOLE</h1>
-      <p class="status-line">
-        Full-screen pixel-art boss fight built with Python and pygame<span class="cursor">_</span>
-      </p>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Outer Space home">
+      <span class="brand-tag">PYGAME / OPEN SOURCE</span>
+      <strong>OUTER SPACE</strong>
+    </a>
 
-      <p class="hero-description">
-        Fight the Original Boss, switch weapons under pressure, use slow motion wisely,
-        and survive a clean but intense arcade combat loop.
-      </p>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Open navigation">MENU</button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#home">HOME</a>
+      <a href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">GITHUB</a>
+      <a href="https://github.com/whoIsClownHere/Outer-Space-v-2.0/blob/main/README.md" target="_blank" rel="noreferrer">README</a>
+    </nav>
+  </header>
 
-      <div class="hero-actions">
-        <a class="hero-cta hero-cta-primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">
-          <span>01</span>
-          <strong>OPEN GITHUB</strong>
-          <b>▶</b>
-        </a>
+  <main>
+    <section class="hero hero-clean" id="home">
+      <div class="hero-background" aria-hidden="true"></div>
 
-        <a class="hero-cta" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0/blob/main/README.md" target="_blank" rel="noreferrer">
-          <span>02</span>
-          <strong>VIEW README</strong>
-          <b>▶</b>
-        </a>
+      <div class="hero-grid">
+        <div class="hero-console terminal-panel reveal">
+          <p class="panel-kicker">SECTOR GREEN / START TERMINAL</p>
+          <h1>COMMAND CONSOLE</h1>
+          <p class="status-line">
+            Full-screen pixel-art boss fight built with Python and pygame<span class="cursor">_</span>
+          </p>
 
-        <a class="hero-cta" href="#tech">
-          <span>03</span>
-          <strong>RUN LOCALLY</strong>
-          <b>▶</b>
-        </a>
+          <p class="hero-description">
+            Fight the Original Boss, switch weapons under pressure, use slow motion wisely,
+            and survive a clean but intense arcade combat loop.
+          </p>
+
+          <div class="hero-actions">
+            <a class="hero-cta hero-cta-primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">
+              <span>01</span>
+              <strong>OPEN GITHUB</strong>
+              <b>▶</b>
+            </a>
+
+            <a class="hero-cta" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0/blob/main/README.md" target="_blank" rel="noreferrer">
+              <span>02</span>
+              <strong>VIEW README</strong>
+              <b>▶</b>
+            </a>
+
+            <a class="hero-cta" href="#tech">
+              <span>03</span>
+              <strong>RUN LOCALLY</strong>
+              <b>▶</b>
+            </a>
+          </div>
+
+          <div class="record-row">
+            <span>REPOSITORY STATUS</span>
+            <strong>LIVE</strong>
+          </div>
+        </div>
+
+        <div class="planet-stage reveal" aria-hidden="true">
+          <div class="planet-glow"></div>
+          <div class="planet-orbit orbit-1"></div>
+          <div class="planet-orbit orbit-2"></div>
+          <div class="planet-orbit orbit-3"></div>
+
+          <div class="planet">
+            <div class="planet-shadow"></div>
+            <div class="planet-core"></div>
+            <div class="planet-band band-1"></div>
+            <div class="planet-band band-2"></div>
+            <div class="planet-band band-3"></div>
+            <div class="planet-crater crater-1"></div>
+            <div class="planet-crater crater-2"></div>
+            <div class="planet-crater crater-3"></div>
+            <div class="planet-ring"></div>
+          </div>
+
+          <div class="planet-card terminal-panel">
+            <strong>GITHUB PAGE</strong>
+            <span>source code · screenshots · setup guide</span>
+          </div>
+        </div>
       </div>
 
-      <div class="record-row">
-        <span>REPOSITORY STATUS</span>
-        <strong>LIVE</strong>
-      </div>
-    </div>
-
-    <div class="planet-stage reveal" aria-hidden="true">
-      <div class="planet-glow"></div>
-      <div class="planet-orbit orbit-1"></div>
-      <div class="planet-orbit orbit-2"></div>
-      <div class="planet-orbit orbit-3"></div>
-
-      <div class="planet">
-        <div class="planet-shadow"></div>
-        <div class="planet-core"></div>
-        <div class="planet-band band-1"></div>
-        <div class="planet-band band-2"></div>
-        <div class="planet-band band-3"></div>
-        <div class="planet-crater crater-1"></div>
-        <div class="planet-crater crater-2"></div>
-        <div class="planet-crater crater-3"></div>
-        <div class="planet-ring"></div>
+      <div class="telemetry terminal-panel reveal">
+        <strong>REPOSITORY ACCESS</strong>
+        <span><b>README</b> docs and overview</span>
+        <span><b>SOURCE</b> full codebase</span>
+        <span><b>SETUP</b> install and run</span>
+        <span><b>VISUALS</b> screenshots and UI</span>
       </div>
 
-      <div class="planet-card terminal-panel">
-        <strong>GITHUB PAGE</strong>
-        <span>source code · screenshots · setup guide</span>
-      </div>
-    </div>
-  </div>
+      <div class="abort-line">OPEN SOURCE CHANNEL ARMED</div>
+    </section>
 
-  <div class="telemetry terminal-panel reveal">
-    <strong>REPOSITORY ACCESS</strong>
-    <span><b>README</b> docs and overview</span>
-    <span><b>SOURCE</b> full codebase</span>
-    <span><b>SETUP</b> install and run</span>
-    <span><b>VISUALS</b> screenshots and UI</span>
-  </div>
+    <section id="tech" class="terminal-panel reveal" style="margin: 0 22px 70px; padding: 28px;">
+      <p class="panel-kicker">LOCAL LAUNCH SEQUENCE</p>
+      <h2>RUN THE GAME</h2>
+      <p>Install pygame and launch the project from the repository:</p>
+      <pre><code>python3 -m pip install pygame
+cd project
+python3 main.py</code></pre>
+    </section>
+  </main>
 
-  <div class="abort-line">OPEN SOURCE CHANNEL ARMED</div>
-</section>
+  <footer>
+    <span>OUTER SPACE / <span id="year"></span></span>
+    <a href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">SOURCE ON GITHUB</a>
+  </footer>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
