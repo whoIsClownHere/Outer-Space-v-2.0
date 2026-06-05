@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Outer Space — an atmospheric arcade adventure built with Python and Pygame.">
+  <title>Outer Space — Pygame Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <header class="header">
+    <a class="logo" href="#home" aria-label="Outer Space home">
+      <span class="logo-mark">OS</span>
+      <span>OUTER SPACE</span>
+    </a>
+
+    <button class="menu-button" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#mission">Mission</a>
+      <a href="#features">Features</a>
+      <a href="#controls">Controls</a>
+      <a class="nav-github" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span></span> PYGAME SPACE ADVENTURE</p>
+        <h1>Survive the<br><em>unknown.</em></h1>
+        <p class="hero-description">Pilot your ship through hostile space, dodge incoming threats, and push your score beyond the edge of the galaxy.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">Get the game <span>↗</span></a>
+          <a class="button button-ghost" href="#mission">Explore mission <span>↓</span></a>
+        </div>
+        <div class="tech-row">
+          <span>BUILT WITH</span>
+          <strong>Python</strong>
+          <i></i>
+          <strong>Pygame</strong>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Stylized spaceship flying in space">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="planet planet-large"><span></span></div>
+        <div class="planet planet-small"></div>
+        <div class="ship">
+          <div class="ship-wing wing-left"></div>
+          <div class="ship-body"><div class="cockpit"></div></div>
+          <div class="ship-wing wing-right"></div>
+          <div class="engine engine-left"></div>
+          <div class="engine engine-right"></div>
+        </div>
+        <div class="hud hud-top"><span>SECTOR</span><strong>07 — ORION</strong></div>
+        <div class="hud hud-bottom"><span>VELOCITY</span><strong>27,430 KM/H</strong></div>
+      </div>
+
+      <a class="scroll-hint" href="#mission"><span></span>SCROLL TO EXPLORE</a>
+    </section>
+
+    <section class="mission section" id="mission">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> THE MISSION</p>
+        <h2>The void will test<br>every decision.</h2>
+      </div>
+      <div class="mission-grid">
+        <p class="lead reveal">Outer Space is a fast-paced arcade game where focus, movement, and timing determine how long your mission lasts.</p>
+        <div class="mission-text reveal">
+          <p>Every second increases the pressure. Read the battlefield, find the safe route, and keep moving while the universe closes in around you.</p>
+          <p>Simple controls make the game easy to enter. Increasing speed and danger make it difficult to master.</p>
+        </div>
+      </div>
+      <div class="stats reveal">
+        <article><strong data-counter="100">0</strong><span>% Python powered</span></article>
+        <article><strong>∞</strong><span>Ways to improve</span></article>
+        <article><strong>1</strong><span>Mission: survive</span></article>
+      </div>
+    </section>
+
+    <section class="features section" id="features">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span></span> GAME SYSTEMS</p>
+        <h2>Built for the<br>next attempt.</h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card reveal"><span class="number">01</span><div class="feature-icon radar"><i></i></div><h3>Reactive gameplay</h3><p>Threats demand immediate decisions and precise movement.</p></article>
+        <article class="feature-card reveal"><span class="number">02</span><div class="feature-icon speed"><i></i><i></i><i></i></div><h3>Rising intensity</h3><p>The longer you survive, the faster the mission becomes.</p></article>
+        <article class="feature-card reveal"><span class="number">03</span><div class="feature-icon score">+1</div><h3>Score pursuit</h3><p>Every run is another opportunity to beat your best result.</p></article>
+      </div>
+    </section>
+
+    <section class="controls section" id="controls">
+      <div class="controls-panel reveal">
+        <div>
+          <p class="eyebrow"><span></span> FLIGHT MANUAL</p>
+          <h2>Take control.</h2>
+          <p>Use the keyboard to guide your ship. Stay alert — space gives no second chances.</p>
+        </div>
+        <div class="keyboard" aria-label="Keyboard controls">
+          <div class="key-row"><kbd>W</kbd></div>
+          <div class="key-row"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div>
+          <span>MOVE</span>
+        </div>
+        <div class="keyboard">
+          <div class="key-row"><kbd class="space-key">SPACE</kbd></div>
+          <span>ACTION</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta section reveal">
+      <p class="eyebrow"><span></span> READY FOR LAUNCH?</p>
+      <h2>Your mission<br>starts now.</h2>
+      <a class="button button-primary" href="https://github.com/whoIsClownHere/Outer-Space-v-2.0" target="_blank" rel="noreferrer">Open on GitHub <span>↗</span></a>
+      <div class="cta-planet"></div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo" href="#home"><span class="logo-mark">OS</span><span>OUTER SPACE</span></a>
+    <p>Created with Python & Pygame</p>
+    <p>© <span id="year"></span> Outer Space</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
