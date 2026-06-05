@@ -4,16 +4,6 @@ Outer Space is a full-screen pixel-art boss fight where one small ship faces a m
 
 You are not just holding one fire button until the boss disappears. You are choosing weapons, managing cooldowns, dodging environmental hazards, using slow motion at the right moment, and learning how the boss changes from phase to phase.
 
-## Presentation
-
-Outer Space is designed to feel like a compact arcade spectacle:
-
-- A glowing command-console menu sets up the mission.
-- The fight runs in full screen with preserved pixel-art proportions.
-- The boss fills the right side of the arena and changes behavior as its health drops.
-- The arena is not empty space: meteors, comets, crystals, drones, mines, beams, and projectiles constantly reshape the safe zones.
-- Phase transitions stop the normal fight for a cinematic super-laser moment.
-
 ## Screenshots
 
 | Main Menu | Mode Select |
